@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starlink VIP - منصة الاستثمار السحابي المتقدمة</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0B0F19',
+                            card: '#151C2C',
+                            border: '#232D42',
+                            gold: '#F59E0B',
+                            goldHover: '#D97706',
+                            accent: '#10B981'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #0B0F19; color: #F3F4F6; font-family: 'Cairo', sans-serif; }
+        .gold-gradient { background: linear-gradient(135deg, #F59E0B 0%, #B45309 100%); }
+        .gold-text { background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .glass-card { background: rgba(21, 28, 44, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(245, 158, 11, 0.15); }
+        .toast-enter { transform: translateY(100%); opacity: 0; }
+        .toast-show { transform: translateY(0); opacity: 1; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .toast-exit { transform: translateY(100%); opacity: 0; transition: all 0.3s ease-in; }
+    </style>
+</head>
+<body class="pb-24 antialiased selection:bg-amber-500 selection:text-black">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-40 bg-brand-dark/95 backdrop-blur-md border-b border-brand-border px-4 py-3">
+        <div class="max-w-md mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full gold-gradient flex items-center justify-center font-bold text-black text-lg shadow-lg shadow-amber-500/20">
+                    ف
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-white text-base">فواز</span>
+                        <span class="bg-amber-500/20 text-amber-400 border border-amber-500/30 text-xs px-2 py-0.5 rounded-full font-bold">VIP 1</span>
+                    </div>
+                    <p class="text-xs text-gray-400">حساب استثماري موثق</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <button onclick="toggleAdminModal()" class="text-xs bg-gray-800 hover:bg-gray-700 text-gray-300 px-2.5 py-1.5 rounded-lg border border-gray-700 flex items-center gap-1 transition">
+                    <i class="fa-solid fa-user-shield text-amber-400"></i> الأدمن
+                </button>
+                <button onclick="openModal('rechargeModal')" class="gold-gradient text-black font-bold text-xs px-3 py-1.5 rounded-lg shadow-md hover:opacity-90 transition flex items-center gap-1">
+                    <i class="fa-solid fa-wallet"></i> إيداع
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-md mx-auto px-4 pt-4 space-y-5">
+
+        <!-- Balance Card -->
+        <div class="glass-card rounded-2xl p-5 relative overflow-hidden shadow-xl">
+            <div class="absolute -left-10 -top-10 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl"></div>
+            <div class="flex justify-between items-start mb-2">
+                <span class="text-xs text-gray-400 font-semibold">إجمالي الرصيد المتاح</span>
+                <span class="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded-md border border-emerald-500/20 flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> نشط
+                </span>
+            </div>
+            <div class="flex items-baseline gap-2 mb-4">
+                <h1 id="userBalance" class="text-3xl font-extrabold gold-text tracking-tight">546.50</h1>
+                <span class="text-sm font-bold text-amber-400">USDT</span>
+            </div>
+
+            <!-- Stats Row -->
+            <div class="grid grid-cols-2 gap-3 pt-3 border-t border-brand-border/60">
+                <div>
+                    <span class="text-[11px] text-gray-400 block mb-0.5">إجمالي الأرباح</span>
+                    <span id="totalEarnings" class="text-sm font-bold text-emerald-400">+124.80 USDT</span>
+                </div>
+                <div>
+                    <span class="text-[11px] text-gray-400 block mb-0.5">عمولات الإحالة (40%)</span>
+                    <span id="referralEarnings" class="text-sm font-bold text-amber-400">+80.00 USDT</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons Grid -->
+        <div class="grid grid-cols-4 gap-2 text-center">
+            <button onclick="openModal('rechargeModal')" class="bg-brand-card hover:bg-brand-border p-3 rounded-xl border border-brand-border transition group">
+                <div class="w-9 h-9 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center mx-auto mb-1.5 group-hover:scale-110 transition">
+                    <i class="fa-solid fa-arrow-down-left"></i>
+                </div>
+                <span class="text-xs font-semibold block text-gray-200">شحن</span>
+            </button>
+            <button onclick="openModal('withdrawModal')" class="bg-brand-card hover:bg-brand-border p-3 rounded-xl border border-brand-border transition group">
+                <div class="w-9 h-9 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center mx-auto mb-1.5 group-hover:scale-110 transition">
+                    <i class="fa-solid fa-arrow-up-right"></i>
+                </div>
+                <span class="text-xs font-semibold block text-gray-200">سحب</span>
+            </button>
+            <button onclick="openModal('referralModal')" class="bg-brand-card hover:bg-brand-border p-3 rounded-xl border border-brand-border transition group">
+                <div class="w-9 h-9 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center mx-auto mb-1.5 group-hover:scale-110 transition">
+                    <i class="fa-solid fa-user-plus"></i>
+                </div>
+                <span class="text-xs font-semibold block text-gray-200">دعوة صديق</span>
+            </button>
+            <a href="https://t.me/NawafTrad" target="_blank" class="bg-brand-card hover:bg-brand-border p-3 rounded-xl border border-brand-border transition group block">
+                <div class="w-9 h-9 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center mx-auto mb-1.5 group-hover:scale-110 transition">
+                    <i class="fa-brands fa-telegram"></i>
+                </div>
+                <span class="text-xs font-semibold block text-gray-200">الدعم</span>
+            </a>
+        </div>
+
+        <!-- 40% Referral Banner -->
+        <div class="bg-gradient-to-r from-amber-500/20 via-amber-600/10 to-transparent p-4 rounded-xl border border-amber-500/30 flex items-center justify-between">
+            <div class="space-y-0.5">
+                <div class="flex items-center gap-1.5 text-amber-400 font-bold text-xs">
+                    <i class="fa-solid fa-gift"></i> مكافأة الإحالة الفائقة 40%
+                </div>
+                <p class="text-[11px] text-gray-300">دع أصدقاءك يشحنون واحصل فوراً على 40% من أرباح إحالتهم!</p>
+            </div>
+            <button onclick="openModal('referralModal')" class="gold-gradient text-black font-bold text-xs px-3 py-1.5 rounded-lg whitespace-nowrap">
+                ادعُ الآن
+            </button>
+        </div>
+
+        <!-- Active Mining Timer Widget -->
+        <div class="bg-brand-card p-4 rounded-xl border border-brand-border flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+                    <i class="fa-solid fa-microchip animate-spin text-lg" style="animation-duration: 6s;"></i>
+                </div>
+                <div>
+                    <h4 class="text-xs font-bold text-white">دورة الاستثمار الحالية (20% / 48 ساعة)</h4>
+                    <p class="text-[11px] text-gray-400">العائد المتبقي للاستحقاق:</p>
+                </div>
+            </div>
+            <div class="text-left">
+                <span id="countdownTimer" class="font-mono text-sm font-extrabold text-amber-400 bg-black/40 px-2.5 py-1 rounded-md border border-amber-500/20">31:14:08</span>
+            </div>
+        </div>
+
+        <!-- VIP Packages Tiers Section -->
+        <div>
+            <div class="flex justify-between items-center mb-3">
+                <h2 class="text-sm font-bold text-white flex items-center gap-1.5">
+                    <i class="fa-solid fa-layer-group text-amber-400"></i> باقات الاستثمار المتاحة (VIP)
+                </h2>
+                <span class="text-[11px] text-amber-400/80 font-semibold">عائد 20% كل 48 ساعة</span>
+            </div>
+
+            <div id="packagesGrid" class="space-y-3">
+                <!-- Dynamically Rendered via JS -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="fixed bottom-0 left-0 right-0 z-40 bg-brand-dark/95 border-t border-brand-border backdrop-blur-lg">
+        <div class="max-w-md mx-auto grid grid-cols-4 py-2 text-center">
+            <button class="text-amber-400 flex flex-col items-center gap-0.5">
+                <i class="fa-solid fa-house text-base"></i>
+                <span class="text-[10px] font-bold">الرئيسية</span>
+            </button>
+            <button onclick="openModal('rechargeModal')" class="text-gray-400 hover:text-white flex flex-col items-center gap-0.5">
+                <i class="fa-solid fa-credit-card text-base"></i>
+                <span class="text-[10px]">الإيداع</span>
+            </button>
+            <button onclick="openModal('referralModal')" class="text-gray-400 hover:text-white flex flex-col items-center gap-0.5">
+                <i class="fa-solid fa-users text-base"></i>
+                <span class="text-[10px]">الفريق</span>
+            </button>
+            <button onclick="openModal('withdrawModal')" class="text-gray-400 hover:text-white flex flex-col items-center gap-0.5">
+                <i class="fa-solid fa-wallet text-base"></i>
+                <span class="text-[10px]">السحب</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Notification Toast Container -->
+    <div id="toastContainer" class="fixed bottom-16 left-4 right-4 z-50 max-w-md mx-auto pointer-events-none"></div>
+
+    <!-- MODAL: Recharge / Deposit -->
+    <div id="rechargeModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+        <div class="bg-brand-card w-full max-w-md rounded-t-2xl sm:rounded-2xl border border-brand-border p-5 space-y-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b border-brand-border pb-3">
+                <h3 class="font-bold text-white text-sm flex items-center gap-2">
+                    <i class="fa-solid fa-circle-arrow-down text-amber-400"></i> شحن الحساب (USDT - TRC20)
+                </h3>
+                <button onclick="closeModal('rechargeModal')" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <!-- Address Box 1: TRC20 -->
+            <div class="space-y-1.5">
+                <label class="text-xs text-gray-400 block">عنوان عنوان المحفظة (USDT TRC20):</label>
+                <div class="bg-black/50 p-2.5 rounded-lg border border-brand-border flex items-center justify-between">
+                    <span class="font-mono text-xs text-amber-300 truncate select-all">TWQxqyAezMDgoVxdW2Cbb5PDC1kTIkw4DN</span>
+                    <button onclick="copyText('TWQxqyAezMDgoVxdW2Cbb5PDC1kTIkw4DN')" class="text-xs bg-amber-500/20 text-amber-400 px-2.5 py-1 rounded hover:bg-amber-500/30 whitespace-nowrap">
+                        <i class="fa-solid fa-copy"></i> نسخ
+                    </button>
+                </div>
+            </div>
+
+            <!-- Address Box 2: Binance UID -->
+            <div class="space-y-1.5">
+                <label class="text-xs text-gray-400 block">معرف بينانس (Binance Pay UID):</label>
+                <div class="bg-black/50 p-2.5 rounded-lg border border-brand-border flex items-center justify-between">
+                    <span class="font-mono text-xs text-amber-300 select-all">939010871</span>
+                    <button onclick="copyText('939010871')" class="text-xs bg-amber-500/20 text-amber-400 px-2.5 py-1 rounded hover:bg-amber-500/30 whitespace-nowrap">
+                        <i class="fa-solid fa-copy"></i> نسخ
+                    </button>
+                </div>
+            </div>
+
+            <!-- Recharge Form -->
+            <form onsubmit="submitRecharge(event)" class="space-y-3 pt-2">
+                <div>
+                    <label class="text-xs text-gray-300 block mb-1">مبلغ الإيداع (الحد الأدنى 50 USDT):</label>
+                    <input type="number" id="depositAmount" min="50" placeholder="أدخل المبلغ بـ USDT" required class="w-full bg-black/40 border border-brand-border rounded-lg p-2.5 text-xs text-white focus:border-amber-500 outline-none">
+                </div>
+                <div>
+                    <label class="text-xs text-gray-300 block mb-1">معرف المعاملة (TxID / Order ID):</label>
+                    <input type="text" id="depositTxid" placeholder="أدخل رقم عملية التحويل Hash" required class="w-full bg-black/40 border border-brand-border rounded-lg p-2.5 text-xs text-white focus:border-amber-500 outline-none">
+                </div>
+                <button type="submit" class="w-full gold-gradient text-black font-bold text-xs py-3 rounded-lg shadow-lg hover:opacity-90 transition">
+                    تاكيد عملية الإيداع
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: Withdraw -->
+    <div id="withdrawModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+        <div class="bg-brand-card w-full max-w-md rounded-t-2xl sm:rounded-2xl border border-brand-border p-5 space-y-4">
+            <div class="flex justify-between items-center border-b border-brand-border pb-3">
+                <h3 class="font-bold text-white text-sm flex items-center gap-2">
+                    <i class="fa-solid fa-circle-arrow-up text-emerald-400"></i> طلب سحب الأرباح
+                </h3>
+                <button onclick="closeModal('withdrawModal')" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <form onsubmit="submitWithdrawal(event)" class="space-y-3">
+                <div>
+                    <label class="text-xs text-gray-300 block mb-1">عنوان محفظتك (USDT TRC20):</label>
+                    <input type="text" id="withdrawWallet" placeholder="T..." required class="w-full bg-black/40 border border-brand-border rounded-lg p-2.5 text-xs text-white focus:border-emerald-500 outline-none">
+                </div>
+                <div>
+                    <label class="text-xs text-gray-300 block mb-1">مبلغ السحب (الحد الأدنى 10 USDT):</label>
+                    <input type="number" id="withdrawAmount" min="10" placeholder="أدخل مبلغ السحب" required class="w-full bg-black/40 border border-brand-border rounded-lg p-2.5 text-xs text-white focus:border-emerald-500 outline-none">
+                </div>
+                <div class="bg-emerald-500/10 p-2.5 rounded-lg border border-emerald-500/20 text-[11px] text-emerald-300">
+                    رسوم المعالجة: 0 USDT | وقت التنفيذ المتوقع: خلال 15 دقيقة
+                </div>
+                <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-black font-bold text-xs py-3 rounded-lg transition">
+                    تأكيد طلب السحب
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: Referral / Invite -->
+    <div id="referralModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+        <div class="bg-brand-card w-full max-w-md rounded-t-2xl sm:rounded-2xl border border-brand-border p-5 space-y-4">
+            <div class="flex justify-between items-center border-b border-brand-border pb-3">
+                <h3 class="font-bold text-white text-sm flex items-center gap-2">
+                    <i class="fa-solid fa-users text-amber-400"></i> برنامج دعوة الأصدقاء (عمولة 40%)
+                </h3>
+                <button onclick="closeModal('referralModal')" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <div class="text-center space-y-2">
+                <div class="w-14 h-14 rounded-full bg-amber-500/10 border border-amber-500/30 flex items-center justify-center mx-auto text-amber-400 text-2xl">
+                    <i class="fa-solid fa-gift"></i>
+                </div>
+                <h4 class="font-bold text-white text-sm">اربح 40% فوراً عن كل شحن!</h4>
+                <p class="text-xs text-gray-300">شارك رابطك الخاص مع أصدقائك، وعند قيامهم بالإيداع لشراء أي باقة ستحصل مباشرة على 40% كعمولة كاش قابلة للسحب.</p>
+            </div>
+
+            <div class="space-y-1.5 pt-2">
+                <label class="text-xs text-gray-400 block">رابط الإحالة الخاص بك:</label>
+                <div class="bg-black/50 p-2.5 rounded-lg border border-brand-border flex items-center justify-between">
+                    <span id="refLinkText" class="font-mono text-xs text-amber-300 truncate">https://starlink-vip.com/ref?id=FAWAZ99</span>
+                    <button onclick="copyText(document.getElementById('refLinkText').innerText)" class="text-xs gold-gradient text-black font-bold px-3 py-1 rounded whitespace-nowrap">
+                        نسخ الرابط
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: Admin Panel -->
+    <div id="adminModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-brand-card w-full max-w-md rounded-2xl border border-brand-border p-5 space-y-4 max-h-[85vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b border-brand-border pb-3">
+                <h3 class="font-bold text-white text-sm flex items-center gap-2">
+                    <i class="fa-solid fa-user-shield text-amber-400"></i> لوحة التحكم للإدارة (Admin)
+                </h3>
+                <button onclick="closeModal('adminModal')" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <!-- Login View -->
+            <div id="adminAuth" class="space-y-3">
+                <p class="text-xs text-gray-300">أدخل كلمة مرور الإدارة للوصول:</p>
+                <input type="password" id="adminPass" placeholder="كلمة المرور (الافتراضية: admin123)" class="w-full bg-black/40 border border-brand-border rounded-lg p-2.5 text-xs text-white outline-none">
+                <button onclick="verifyAdmin()" class="w-full gold-gradient text-black font-bold text-xs py-2.5 rounded-lg">دخول اللوحة</button>
+            </div>
+
+            <!-- Admin Content View -->
+            <div id="adminContent" class="hidden space-y-4">
+                <div class="bg-black/40 p-3 rounded-xl border border-brand-border space-y-2">
+                    <h4 class="text-xs font-bold text-amber-400">تعديل رصيد المستخدم (فواز)</h4>
+                    <div class="flex gap-2">
+                        <input type="number" id="newBalanceInput" placeholder="الرصيد الجديد" class="w-full bg-black/60 border border-brand-border rounded p-2 text-xs text-white">
+                        <button onclick="updateUserBalance()" class="bg-amber-500 text-black font-bold text-xs px-3 rounded whitespace-nowrap">حفظ</button>
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <h4 class="text-xs font-bold text-white">طلبات الإيداع/السحب المعلقة:</h4>
+                    <div id="pendingRequestsList" class="space-y-2 text-xs text-gray-400">
+                        <div class="p-2.5 rounded bg-black/30 border border-brand-border flex justify-between items-center">
+                            <div>
+                                <span class="text-amber-400 font-bold block">إيداع: 100 USDT</span>
+                                <span class="text-[10px] font-mono">TxID: 88f9a2...301</span>
+                            </div>
+                            <button onclick="approveRequest(this, 100)" class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] px-2 py-1 rounded">موافقة</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Packages Configuration Data (20% return every 48 hours)
+        const vipPackages = [
+            { id: 1, name: 'VIP 1 - النجم الأساسي', price: 50, return48h: 10, target: 'تجريبي / للمبتدئين' },
+            { id: 2, name: 'VIP 2 - الفضية', price: 100, return48h: 20, target: 'باقة أساسية' },
+            { id: 3, name: 'VIP 3 - الفضية المتقدمة', price: 170, return48h: 34, target: 'باقة فضية' },
+            { id: 4, name: 'VIP 4 - الذهبية', price: 290, return48h: 58, target: 'باقة فضية متقدمة' },
+            { id: 5, name: 'VIP 5 - الذهبية المتقدمة', price: 360, return48h: 72, target: 'باقة ذهبية' },
+            { id: 6, name: 'VIP 6 - باقة النخبة', price: 470, return48h: 94, target: 'باقة ذهبية متقدمة' },
+            { id: 7, name: 'VIP 7 - النخبة المتقدمة', price: 600, return48h: 120, target: 'باقة النخبة' },
+            { id: 8, name: 'VIP 8 - الألماس', price: 900, return48h: 180, target: 'باقة النخبة المتقدمة' },
+            { id: 9, name: 'VIP 9 - الألماس الملكي', price: 1200, return48h: 240, target: 'باقة الألماس' },
+            { id: 10, name: 'VIP 10 - كبار المستثمرين', price: 2500, return48h: 500, target: 'كبار المستثمرين' },
+            { id: 11, name: 'VIP 11 - الشريك الاستراتيجي', price: 5000, return48h: 1000, target: 'الشريك الاستراتيجي VIP' }
+        ];
+
+        // Simulated Real-Time Withdrawal & Deposit Toast Messages
+        const liveNotifications = [
+            { user: 'أحمد***', type: 'سحب', amount: '45.00 USDT' },
+            { user: 'User_9921', type: 'إيداع', amount: '500.00 USDT' },
+            { user: 'خالد_ع', type: 'سحب', amount: '180.00 USDT' },
+            { user: 'مريم***', type: 'عمولة إحالة', amount: '40.00 USDT' },
+            { user: 'Sami_K', type: 'سحب', amount: '1,000.00 USDT' },
+            { user: 'CryptoPro', type: 'إيداع', amount: '1,200.00 USDT' },
+            { user: 'عمر_M', type: 'سحب', amount: '20.00 USDT' }
+        ];
+
+        // Render Packages
+        function renderPackages() {
+            const container = document.getElementById('packagesGrid');
+            container.innerHTML = vipPackages.map(pkg => `
+                <div class="bg-brand-card rounded-xl p-4 border border-brand-border hover:border-amber-500/40 transition space-y-3">
+                    <div class="flex justify-between items-center border-b border-brand-border/60 pb-2">
+                        <div>
+                            <h3 class="font-bold text-white text-xs flex items-center gap-1.5">
+                                <i class="fa-solid fa-gem text-amber-400"></i> ${pkg.name}
+                            </h3>
+                            <span class="text-[10px] text-gray-400">${pkg.target}</span>
+                        </div>
+                        <span class="text-xs font-bold bg-amber-500/10 text-amber-400 px-2.5 py-1 rounded-full border border-amber-500/20">
+                            ${pkg.price} USDT
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div class="bg-black/30 p-2 rounded border border-brand-border/40">
+                            <span class="text-[10px] text-gray-400 block">العائد (كل 48 ساعة):</span>
+                            <span class="font-bold text-emerald-400">+${pkg.return48h} USDT</span>
+                        </div>
+                        <div class="bg-black/30 p-2 rounded border border-brand-border/40">
+                            <span class="text-[10px] text-gray-400 block">الأرباح الشهرية:</span>
+                            <span class="font-bold text-amber-400">+${pkg.return48h * 15} USDT</span>
+                        </div>
+                    </div>
+
+                    <button onclick="buyPackage(${pkg.price})" class="w-full gold-gradient text-black font-bold text-xs py-2 rounded-lg hover:opacity-90 transition flex items-center justify-center gap-1">
+                        <i class="fa-solid fa-bolt"></i> تفعيل الباقة الآن
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // Live Toast Notifications Trigger
+        function triggerLiveToast() {
+            const container = document.getElementById('toastContainer');
+            const item = liveNotifications[Math.floor(Math.random() * liveNotifications.length)];
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast-enter glass-card p-3 rounded-xl shadow-2xl flex items-center justify-between text-xs border border-amber-500/30 mb-2 pointer-events-auto';
+            toast.innerHTML = `
+                <div class="flex items-center gap-2.5">
+                    <div class="w-7 h-7 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center">
+                        <i class="fa-solid fa-check text-xs"></i>
+                    </div>
+                    <div>
+                        <span class="font-bold text-white block">${item.user} قام بـ (${item.type})</span>
+                        <span class="text-[10px] text-gray-400">قبل بضعة ثوانٍ</span>
+                    </div>
+                </div>
+                <span class="font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                    ${item.amount}
+                </span>
+            `;
+
+            container.appendChild(toast);
+            setTimeout(() => toast.classList.add('toast-show'), 50);
+
+            setTimeout(() => {
+                toast.classList.remove('toast-show');
+                toast.classList.add('toast-exit');
+                setTimeout(() => toast.remove(), 400);
+            }, 4500);
+        }
+
+        // Countdown Timer Loop
+        function startCountdown() {
+            let seconds = 31 * 3600 + 14 * 60 + 8;
+            const timerEl = document.getElementById('countdownTimer');
+            setInterval(() => {
+                seconds--;
+                if(seconds < 0) seconds = 48 * 3600;
+                const h = Math.floor(seconds / 3600).toString().padStart(2, '0');
+                const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+                const s = (seconds % 60).toString().padStart(2, '0');
+                timerEl.innerText = `${h}:${m}:${s}`;
+            }, 1000);
+        }
+
+        // Modal Controllers
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+        // Copy Helper
+        function copyText(text) {
+            navigator.clipboard.writeText(text);
+            alert('تم النسخ بنجاح: ' + text);
+        }
+
+        // Action Handlers
+        function buyPackage(price) {
+            let currentBal = parseFloat(document.getElementById('userBalance').innerText);
+            if(currentBal >= price) {
+                currentBal -= price;
+                document.getElementById('userBalance').innerText = currentBal.toFixed(2);
+                alert('تم تفعيل الباقة بنجاح! ستتلقى الأرباح في رصيدك كل 48 ساعة.');
+            } else {
+                alert('رصيدك غير كافٍ لتفعيل هذه الباقة. يرجى الضغط على إيداع وشحن حسابك.');
+                openModal('rechargeModal');
+            }
+        }
+
+        function submitRecharge(e) {
+            e.preventDefault();
+            alert('تم إرسال طلب الإيداع بنجاح! سيتم التحقق من المعاملة وإضافة الرصيد لحسابك خلال دقائق.');
+            closeModal('rechargeModal');
+        }
+
+        function submitWithdrawal(e) {
+            e.preventDefault();
+            const amt = parseFloat(document.getElementById('withdrawAmount').value);
+            let currentBal = parseFloat(document.getElementById('userBalance').innerText);
+            
+            if(amt > currentBal) {
+                alert('المبلغ المطلوب أكبر من رصيدك المتاح حالياً!');
+                return;
+            }
+            currentBal -= amt;
+            document.getElementById('userBalance').innerText = currentBal.toFixed(2);
+            alert('تم تقديم طلب السحب بنجاح! سيتم تحويل USDT إلى محفظتك قريباً.');
+            closeModal('withdrawModal');
+        }
+
+        // Admin Helpers
+        function toggleAdminModal() { openModal('adminModal'); }
+        function verifyAdmin() {
+            if(document.getElementById('adminPass').value === 'admin123') {
+                document.getElementById('adminAuth').classList.add('hidden');
+                document.getElementById('adminContent').classList.remove('hidden');
+            } else {
+                alert('كلمة المرور خاطئة!');
+            }
+        }
+        function updateUserBalance() {
+            const val = parseFloat(document.getElementById('newBalanceInput').value);
+            if(!isNaN(val)) {
+                document.getElementById('userBalance').innerText = val.toFixed(2);
+                alert('تم تحديث الرصيد بنجاح!');
+            }
+        }
+        function approveRequest(btn, amount) {
+            let currentBal = parseFloat(document.getElementById('userBalance').innerText);
+            document.getElementById('userBalance').innerText = (currentBal + amount).toFixed(2);
+            btn.parentElement.remove();
+            alert('تمت الموافقة وإضافة ' + amount + ' USDT لرصيد المستخدم!');
+        }
+
+        // Init App
+        window.onload = () => {
+            renderPackages();
+            startCountdown();
+            setInterval(triggerLiveToast, 6000); // Popup notification every 6s
+        };
+    </script>
+</body>
+</html>
