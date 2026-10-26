@@ -4,23 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Starlink VIP - المنصة الرسمية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Tahoma, sans-serif; }
-        body { background: #0b0f19; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .container { max-width: 450px; width: 100%; background: #161b22; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); border: 1px solid #30363d; }
-        h2 { text-align: center; color: #00d2ff; margin-bottom: 20px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        body { background: #0b0f19; color: #fff; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 10px; }
+        .container { max-width: 450px; width: 100%; background: #111723; padding: 20px; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.7); border: 1px solid #1e293b; }
+        
+        /* Auth Styles */
+        h2.auth-title { text-align: center; color: #00d2ff; margin-bottom: 20px; font-size: 22px; }
         .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; color: #8b949e; }
-        input { width: 100%; padding: 12px; background: #0d1117; border: 1px solid #30363d; color: #fff; border-radius: 6px; font-size: 16px; }
+        label { display: block; margin-bottom: 6px; color: #94a3b8; font-size: 14px; }
+        input { width: 100%; padding: 12px 15px; background: #0b0f19; border: 1px solid #334155; color: #fff; border-radius: 8px; font-size: 15px; }
         input:focus { border-color: #00d2ff; outline: none; }
-        button { width: 100%; padding: 12px; background: #238636; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
-        button:hover { background: #2ea043; }
-        .switch-btn { background: transparent; color: #00d2ff; border: none; margin-top: 15px; cursor: pointer; width: 100%; font-size: 14px; }
+        .btn-primary { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        .btn-primary:hover { background: #1d4ed8; }
+        .switch-btn { background: transparent; color: #38bdf8; border: none; margin-top: 15px; cursor: pointer; width: 100%; font-size: 14px; }
         .switch-btn:hover { text-decoration: underline; }
-        .hidden { display: none; }
-        .admin-box { margin-top: 20px; background: #0d1117; padding: 15px; border-radius: 8px; border: 1px solid #30363d; }
-        .user-card { background: #0b0f19; padding: 10px; margin-bottom: 10px; border-radius: 6px; border: 1px solid #21262d; }
-        .alert { text-align: center; color: #ff5555; margin-top: 10px; font-size: 14px; }
+        .alert { text-align: center; color: #f87171; margin-top: 10px; font-size: 14px; }
+        
+        .hidden { display: none !important; }
+
+        /* VIP Dashboard Styles */
+        .user-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .user-info { display: flex; align-items: center; gap: 10px; }
+        .avatar { width: 42px; height: 42px; background: #f59e0b; color: #000; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 18px; }
+        .user-details h3 { font-size: 16px; display: flex; align-items: center; gap: 6px; }
+        .vip-badge { background: #f59e0b; color: #000; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; }
+        .user-details p { font-size: 12px; color: #10b981; }
+        .header-actions { display: flex; gap: 8px; }
+        .btn-sm { padding: 6px 12px; border-radius: 6px; border: none; font-size: 12px; font-weight: bold; cursor: pointer; }
+        .btn-admin { background: #334155; color: #38bdf8; }
+        .btn-deposit { background: #f59e0b; color: #000; }
+
+        .balance-card { background: linear-gradient(135deg, #1e293b, #0f172a); padding: 20px; border-radius: 14px; border: 1px solid #334155; text-align: center; margin-bottom: 20px; position: relative; }
+        .status-tag { position: absolute; top: 15px; left: 15px; background: rgba(16, 185, 129, 0.2); color: #10b981; padding: 3px 10px; border-radius: 10px; font-size: 11px; font-weight: bold; }
+        .balance-title { color: #94a3b8; font-size: 13px; margin-bottom: 8px; }
+        .balance-amount { font-size: 28px; font-weight: bold; color: #f59e0b; margin-bottom: 15px; }
+        .balance-stats { display: flex; justify-content: space-around; border-top: 1px solid #334155; padding-top: 12px; }
+        .stat-item p { font-size: 11px; color: #94a3b8; }
+        .stat-item span { font-size: 13px; font-weight: bold; color: #10b981; }
+
+        .quick-actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
+        .action-item { background: #1e293b; padding: 12px 5px; border-radius: 10px; text-align: center; color: #fff; text-decoration: none; font-size: 12px; border: 1px solid #334155; cursor: pointer; }
+        .action-item i { font-size: 18px; display: block; margin-bottom: 6px; color: #38bdf8; }
+
+        .promo-banner { background: linear-gradient(90deg, #b45309, #78350f); padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .promo-text h4 { font-size: 13px; color: #fef08a; margin-bottom: 4px; }
+        .promo-text p { font-size: 11px; color: #fde68a; }
+        .btn-invite { background: #ea580c; color: #fff; padding: 8px 14px; border: none; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; white-space: nowrap; }
+
+        .cycle-box { background: #1e293b; padding: 15px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 20px; }
+        .cycle-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .cycle-title { font-size: 13px; color: #cbd5e1; display: flex; align-items: center; gap: 8px; }
+        .timer { background: #0f172a; padding: 6px 12px; border-radius: 6px; color: #f59e0b; font-weight: bold; font-size: 13px; font-family: monospace; }
+
+        .section-title { font-size: 15px; margin-bottom: 12px; color: #f59e0b; display: flex; align-items: center; gap: 8px; }
+        .activity-item { background: #1e293b; padding: 12px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #334155; margin-bottom: 10px; }
+        .activity-info { font-size: 12px; }
+        .activity-amount { color: #10b981; font-weight: bold; font-size: 12px; }
+
+        .admin-box { margin-top: 20px; background: #0f172a; padding: 15px; border-radius: 12px; border: 1px solid #38bdf8; }
+        .user-card { background: #1e293b; padding: 10px; margin-bottom: 8px; border-radius: 6px; font-size: 12px; }
+
+        .logout-btn { width: 100%; padding: 10px; background: #ef4444; color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; margin-top: 15px; }
     </style>
 </head>
 <body>
@@ -28,7 +74,7 @@
     <div class="container">
         <!-- قسم تسجيل الحساب / الدخول -->
         <div id="auth-section">
-            <h2 id="form-title">تسجيل حساب جديد</h2>
+            <h2 class="auth-title" id="form-title">تسجيل حساب جديد</h2>
             <div class="form-group">
                 <label>البريد الإلكتروني أو رقم الهاتف</label>
                 <input type="text" id="identifier" placeholder="أدخل البريد أو رقم الهاتف">
@@ -37,25 +83,87 @@
                 <label>كلمة المرور</label>
                 <input type="password" id="password" placeholder="أدخل كلمة المرور">
             </div>
-            <button id="action-btn" onclick="handleAuth()">إنشاء الحساب</button>
+            <button class="btn-primary" id="action-btn" onclick="handleAuth()">إنشاء الحساب</button>
             <button class="switch-btn" onclick="toggleMode()">لديك حساب بالفعل؟ سجل الدخول</button>
             <div id="error-msg" class="alert"></div>
         </div>
 
-        <!-- لوحة التحكم للمستخدم المسجل -->
+        <!-- واجهة المنصة الاستثمارية الفخمة (Dashboard) -->
         <div id="dashboard-section" class="hidden">
-            <h2>مرحباً بك في منصة Starlink VIP</h2>
-            <p style="margin-bottom: 15px; text-align: center; color: #8b949e;">تم تسجيل دخولك بنجاح</p>
-            <div style="background: #1e293b; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                <p>رابط الإحالة الخاص بك:</p>
-                <input type="text" id="ref-link" readonly style="margin-top: 5px; background: #0f172a;">
+            <!-- الهيدر والمعلومات الشخصية -->
+            <div class="user-header">
+                <div class="user-info">
+                    <div class="avatar" id="user-avatar">ف</div>
+                    <div class="user-details">
+                        <h3><span id="user-display-name">فواز</span> <span class="vip-badge">VIP 1</span></h3>
+                        <p><i class="fa-solid fa-circle-check"></i> حساب استثماري موثق</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-sm btn-admin hidden" id="admin-btn-header">الأدمن</button>
+                    <button class="btn-sm btn-deposit"><i class="fa-solid fa-wallet"></i> إيداع</button>
+                </div>
             </div>
-            <button onclick="logout()" style="background: #da3633;">تسجيل الخروج</button>
+
+            <!-- بطاقة الرصيد -->
+            <div class="balance-card">
+                <span class="status-tag">• نشط</span>
+                <div class="balance-title">إجمالي الرصيد المتاح</div>
+                <div class="balance-amount"><span style="font-size: 16px;">USDT</span> 546.50</div>
+                <div class="balance-stats">
+                    <div class="stat-item">
+                        <p>إجمالي الأرباح</p>
+                        <span>USDT 124.80+</span>
+                    </div>
+                    <div class="stat-item">
+                        <p>عمولات الإحالة (40%)</p>
+                        <span>USDT 80.00+</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- الأزرار السريعة -->
+            <div class="quick-actions">
+                <div class="action-item"><i class="fa-solid fa-bolt"></i>شحن</div>
+                <div class="action-item"><i class="fa-solid fa-hand-holding-dollar"></i>سحب</div>
+                <div class="action-item" onclick="copyRefLink()"><i class="fa-solid fa-user-plus"></i>دعوة صديق</div>
+                <div class="action-item"><i class="fa-solid fa-paper-plane"></i>الدعم</div>
+            </div>
+
+            <!-- بنر المكافأة -->
+            <div class="promo-banner">
+                <div class="promo-text">
+                    <h4>🎁 مكافأة الإحالة الفائقة 40%</h4>
+                    <p>دع أصدقاءك يشحنون واحصل فوراً على 40% من أرباح إحالاتهم!</p>
+                </div>
+                <button class="btn-invite" onclick="copyRefLink()">ادعُ الآن</button>
+            </div>
+
+            <!-- دورة الاستثمار -->
+            <div class="cycle-box">
+                <div class="cycle-header">
+                    <div class="cycle-title"><i class="fa-solid fa-microchip" style="color: #f59e0b;"></i> دورة الاستثمار الحالية (20% / 48 ساعة)</div>
+                    <div class="timer">31:13:49</div>
+                </div>
+                <p style="font-size: 11px; color: #94a3b8;">العائد المتبقي للاستحقاق: عائد 20% كل 48 ساعة</p>
+            </div>
+
+            <!-- باقات الاستثمار -->
+            <div class="section-title"><i class="fa-solid fa-layer-group"></i> باقات الاستثمار المتاحة (VIP)</div>
+            <div class="activity-item">
+                <div class="activity-info">
+                    <strong>مريم*** قام بـ (عمولة إحالة)</strong>
+                    <p style="color: #94a3b8; font-size: 10px;">قبل بضعة ثوانٍ</p>
+                </div>
+                <div class="activity-amount">USDT 40.00</div>
+            </div>
+
+            <button class="logout-btn" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج</button>
         </div>
 
         <!-- لوحة تحكم الادمن (تظهر فقط لإيميلك) -->
         <div id="admin-panel" class="hidden admin-box">
-            <h3 style="color: #00d2ff; margin-bottom: 10px;">لوحة تحكم المشرف (Admin)</h3>
+            <h3 style="color: #38bdf8; margin-bottom: 10px; font-size: 14px;"><i class="fa-solid fa-user-shield"></i> لوحة تحكم المشرف (Admin)</h3>
             <div id="users-list">جاري تحميل المشتركين...</div>
         </div>
     </div>
@@ -81,6 +189,7 @@
         const db = getFirestore(app);
 
         const ADMIN_EMAIL = "ffwaz2748@gmail.com";
+        let currentUserId = "";
 
         let isLoginMode = false;
         window.toggleMode = function() {
@@ -101,7 +210,6 @@
                 return;
             }
 
-            // إذا أدخل المستخدم رقماً وليس إيميل، نقوم بتحويله إلى إيميل وهمي ليتوافق مع نظام المصادقة
             let emailForAuth = identifier;
             if (!identifier.includes("@")) {
                 emailForAuth = identifier + "@starlink.vip";
@@ -127,14 +235,26 @@
             signOut(auth);
         }
 
+        window.copyRefLink = function() {
+            const link = `https://nzmkek44.github.io/starlink-vip/?ref=${currentUserId}`;
+            navigator.clipboard.writeText(link);
+            alert("تم نسخ رابط الإحالة بنجاح:\n" + link);
+        }
+
         onAuthStateChanged(auth, async (user) => {
             if (user) {
+                currentUserId = user.uid;
                 document.getElementById("auth-section").classList.add("hidden");
                 document.getElementById("dashboard-section").classList.remove("hidden");
-                document.getElementById("ref-link").value = `https://nzmkek44.github.io/starlink-vip/?ref=${user.uid}`;
+                
+                // تحديث اسم الحساب والحرف الأول
+                const userName = user.email.split('@')[0];
+                document.getElementById("user-display-name").innerText = userName;
+                document.getElementById("user-avatar").innerText = userName.charAt(0).toUpperCase();
 
                 if(user.email === ADMIN_EMAIL || user.email.startsWith("ffwaz2748")) {
                     document.getElementById("admin-panel").classList.remove("hidden");
+                    document.getElementById("admin-btn-header").classList.remove("hidden");
                     loadAdminData();
                 }
             } else {
@@ -154,7 +274,7 @@
                     const data = doc.data();
                     html += `<div class="user-card">
                         <p><strong>المستخدم:</strong> ${data.loginId}</p>
-                        <p style="font-size: 11px; color: #8b949e;">التاريخ: ${data.createdAt}</p>
+                        <p style="font-size: 10px; color: #94a3b8;">التاريخ: ${data.createdAt}</p>
                     </div>`;
                 });
                 listDiv.innerHTML = html || "لا يوجد مشتركين بعد";
