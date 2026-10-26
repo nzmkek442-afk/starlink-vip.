@@ -45,14 +45,14 @@
         .stat-item p { font-size: 11px; color: #94a3b8; }
         .stat-item span { font-size: 13px; font-weight: bold; color: #10b981; }
 
-        /* صندوق إيداع المحفظة */
+        /* صندوق الإيداع */
         .deposit-box { background: #1e293b; padding: 15px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 20px; text-align: center; }
         .deposit-box h4 { font-size: 13px; color: #f59e0b; margin-bottom: 8px; }
         .deposit-box p { font-size: 11px; color: #94a3b8; margin-bottom: 6px; word-break: break-all; }
         .wallet-highlight { background: #0b0f19; padding: 8px; border-radius: 6px; color: #38bdf8; font-family: monospace; font-size: 11px; margin-bottom: 8px; border: 1px dashed #334155; }
         .btn-copy-w { background: #2563eb; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; }
 
-        /* مركز المهام في نص الشاشة (Task Center) */
+        /* مركز المهام في نص الشاشة (كل 48 ساعة) */
         .task-center-box { background: linear-gradient(135deg, #1e293b, #172554); border: 1px solid #3b82f6; padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: center; }
         .task-center-box h3 { color: #60a5fa; font-size: 15px; margin-bottom: 6px; display: flex; align-items: center; justify-content: center; gap: 6px; }
         .task-center-box p { color: #94a3b8; font-size: 11px; margin-bottom: 12px; }
@@ -68,7 +68,7 @@
         .promo-text p { font-size: 11px; color: #fde68a; }
         .btn-invite { background: #ea580c; color: #fff; padding: 8px 14px; border: none; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; }
 
-        /* باقات الاستثمار والأرباح الشهرية وكل 48 ساعة */
+        /* باقات الاستثمار والأرباح كل 48 ساعة */
         .section-title { font-size: 15px; margin-bottom: 12px; color: #f59e0b; display: flex; align-items: center; gap: 8px; }
         .vip-plans-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 20px; }
         .plan-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
@@ -137,7 +137,7 @@
                 </div>
             </div>
 
-            <!-- صندوق معلومات الإيداع (عنوان محفظتك ومعرف بينانس) -->
+            <!-- صندوق معلومات الإيداع -->
             <div id="deposit-info-box" class="deposit-box hidden">
                 <h4><i class="fa-solid fa-qrcode"></i> عنوان الإيداع الرسمي (USDT - TRC20)</h4>
                 <p>قم بالتحويل حصراً عبر شبكة Tron (TRC20):</p>
@@ -146,11 +146,11 @@
                 <p style="margin-top: 10px; color: #f59e0b;">معرف بينانس للإدارة (Binance ID): <strong>939010871</strong></p>
             </div>
 
-            <!-- مركز المهام في نص الشاشة (Task Center) -->
+            <!-- مركز المهام في نص الشاشة (كل 48 ساعة) -->
             <div class="task-center-box">
                 <h3><i class="fa-solid fa-tasks"></i> مركز المهام والأرباح (كل 48 ساعة)</h3>
                 <p>قم بتنفيذ المهمة الدورية لاستلام أرباح الباقة المفعلة لديك فوراً!</p>
-                <button class="btn-do-task" onclick="completeTask()">تنفيذ المهمة واستلام الأرباح</button>
+                <button class="btn-do-task" onclick="completeTask()">تنفيذ المهمة واستلام أرباح 48 ساعة</button>
             </div>
 
             <div class="quick-actions">
@@ -166,7 +166,7 @@
                 <button class="btn-invite" onclick="copyRef()">ادعُ الآن</button>
             </div>
 
-            <!-- الباقات الـ 10 مع حساب أرباح كل 48 ساعة وإجمالي الأرباح لـ 30 يوم -->
+            <!-- باقات الاستثمار الـ 10 (أرباح كل 48 ساعة + إجمالي 30 يوم) -->
             <div class="section-title"><i class="fa-solid fa-layer-group"></i> باقات الاستثمار المتاحة (VIP)</div>
             <div class="vip-plans-grid">
                 <div class="plan-card">
@@ -243,7 +243,7 @@
 
             <div class="section-title"><i class="fa-solid fa-clock-rotate-left"></i> سجل النشاطات</div>
             <div class="activity-item">
-                <div class="activity-info"><strong>عمر*** قام بـ (إتمام مهمة استثمارية)</strong></div>
+                <div class="activity-info"><strong>عمر*** أتم مهمة الاستثمار (كل 48 ساعة)</strong></div>
                 <div class="activity-amount">+USDT الربح المضاف</div>
             </div>
 
@@ -276,7 +276,7 @@
         const db = getFirestore(app);
         const ADMIN_EMAIL = "ffwaz2748@gmail.com";
         let currentUserId = "";
-        let currentPlanProfit = 10; // الربح الافتراضي لكل 48 ساعة حسب الباقة
+        let currentPlanProfit48h = 10; // الربح الافتراضي لكل 48 ساعة
 
         let isLogin = false;
         window.toggleMode = function() {
@@ -326,18 +326,18 @@
 
         window.investPlan = function(vipLevel, price, profit48h) {
             document.getElementById("user-vip-badge").innerText = vipLevel;
-            currentPlanProfit = profit48h;
+            currentPlanProfit48h = profit48h;
             alert(`تم تفعيل باقة ${vipLevel} بقيمة ${price} USDT بنجاح! سيتم إضافة أرباح المهمة (${profit48h} USDT) كل 48 ساعة.`);
         }
 
         window.completeTask = function() {
-            alert(`🎉 مبروك! تم إتمام المهمة بنجاح وتم إضافة أرباح الـ 48 ساعة (${currentPlanProfit} USDT) إلى رصيدك المتاح!`);
+            alert(`🎉 مبروك! تم إتمام المهمة بنجاح وتم إضافة أرباح الـ 48 ساعة (${currentPlanProfit48h} USDT) إلى رصيدك المتاح!`);
         }
 
         const liveMessages = [
-            "🔥 أحمد*** أتم مهمة VIP 1 وسحب أرباحه",
+            "🔥 أحمد*** أتم مهمة VIP 1 (كل 48 ساعة) وسحب أرباحه",
             "💰 يوسف*** ربح عمولة إحالة بقيمة 120 USDT",
-            "⚡ محمد*** أنجز مهامه الدورية بنجاح",
+            "⚡ محمد*** أنجز مهام الـ 48 ساعة بنجاح",
             "🚀 رامي*** ارتقى إلى باقة VIP 5 الكبرى",
             "💎 سارة*** ربحت 450 USDT من أرباح الاستثمار"
         ];
