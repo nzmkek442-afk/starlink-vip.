@@ -24,6 +24,8 @@
         
         .hidden { display: none !important; }
 
+        .live-ticker { background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); color: #fde68a; padding: 8px 12px; border-radius: 8px; font-size: 12px; margin-bottom: 15px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
         .user-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .user-info { display: flex; align-items: center; gap: 10px; }
         .avatar { width: 42px; height: 42px; background: #f59e0b; color: #000; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 18px; }
@@ -43,22 +45,35 @@
         .stat-item p { font-size: 11px; color: #94a3b8; }
         .stat-item span { font-size: 13px; font-weight: bold; color: #10b981; }
 
-        .quick-actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
-        .action-item { background: #1e293b; padding: 12px 5px; border-radius: 10px; text-align: center; color: #fff; cursor: pointer; border: 1px solid #334155; font-size: 12px; transition: 0.2s; }
-        .action-item:active { background: #334155; transform: scale(0.95); }
-        .action-item i { font-size: 18px; display: block; margin-bottom: 6px; color: #38bdf8; }
+        /* صندوق إيداع المحفظة */
+        .deposit-box { background: #1e293b; padding: 15px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 20px; text-align: center; }
+        .deposit-box h4 { font-size: 13px; color: #f59e0b; margin-bottom: 8px; }
+        .deposit-box p { font-size: 11px; color: #94a3b8; margin-bottom: 6px; word-break: break-all; }
+        .wallet-highlight { background: #0b0f19; padding: 8px; border-radius: 6px; color: #38bdf8; font-family: monospace; font-size: 11px; margin-bottom: 8px; border: 1px dashed #334155; }
+        .btn-copy-w { background: #2563eb; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; }
+
+        /* مركز المهام في نص الشاشة (Task Center) */
+        .task-center-box { background: linear-gradient(135deg, #1e293b, #172554); border: 1px solid #3b82f6; padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: center; }
+        .task-center-box h3 { color: #60a5fa; font-size: 15px; margin-bottom: 6px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .task-center-box p { color: #94a3b8; font-size: 11px; margin-bottom: 12px; }
+        .btn-do-task { background: #10b981; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; font-size: 13px; cursor: pointer; width: 100%; transition: 0.2s; }
+        .btn-do-task:active { transform: scale(0.97); }
+
+        .quick-actions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
+        .action-item { background: #1e293b; padding: 15px; border-radius: 10px; text-align: center; color: #fff; cursor: pointer; border: 1px solid #334155; font-size: 14px; font-weight: bold; }
+        .action-item i { font-size: 20px; display: block; margin-bottom: 6px; color: #38bdf8; }
 
         .promo-banner { background: linear-gradient(90deg, #b45309, #78350f); padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .promo-text h4 { font-size: 13px; color: #fef08a; margin-bottom: 4px; }
         .promo-text p { font-size: 11px; color: #fde68a; }
         .btn-invite { background: #ea580c; color: #fff; padding: 8px 14px; border: none; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; }
 
-        /* باقات الاستثمار والأسعار */
+        /* باقات الاستثمار والأرباح الشهرية وكل 48 ساعة */
         .section-title { font-size: 15px; margin-bottom: 12px; color: #f59e0b; display: flex; align-items: center; gap: 8px; }
         .vip-plans-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 20px; }
         .plan-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
         .plan-info h4 { color: #00d2ff; font-size: 14px; margin-bottom: 4px; }
-        .plan-info p { color: #94a3b8; font-size: 11px; }
+        .plan-info p { color: #94a3b8; font-size: 11px; line-height: 1.6; }
         .plan-price { text-align: left; }
         .plan-price span { display: block; font-weight: bold; color: #f59e0b; font-size: 14px; }
         .plan-btn { background: #2563eb; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; margin-top: 6px; }
@@ -75,7 +90,7 @@
 <body>
 
     <div class="container">
-        <!-- قسم تسجيل الحساب / الدخول -->
+        <!-- تسجيل الدخول -->
         <div id="auth-section">
             <h2 class="auth-title" id="form-title">تسجيل حساب جديد</h2>
             <div class="form-group">
@@ -91,37 +106,56 @@
             <div id="error-msg" class="alert"></div>
         </div>
 
-        <!-- واجهة المنصة الاستثمارية الفخمة كاملة -->
+        <!-- واجهة المنصة -->
         <div id="dashboard-section" class="hidden">
+            
+            <div class="live-ticker" id="live-ticker-text">
+                📢 جاري تحميل أحدث العمليات...
+            </div>
+
             <div class="user-header">
                 <div class="user-info">
                     <div class="avatar" id="user-avatar">ف</div>
                     <div class="user-details">
-                        <h3><span id="user-display-name">فواز</span> <span class="vip-badge">VIP 1</span></h3>
+                        <h3><span id="user-display-name">فواز</span> <span class="vip-badge" id="user-vip-badge">VIP 1</span></h3>
                         <p><i class="fa-solid fa-circle-check"></i> حساب استثماري موثق</p>
                     </div>
                 </div>
                 <div class="header-actions">
                     <button class="btn-sm btn-admin hidden" id="admin-btn-header" onclick="toggleAdminPanel()">الأدمن</button>
-                    <button class="btn-sm btn-deposit" onclick="alert('قسم الإيداع مفعل')"><i class="fa-solid fa-wallet"></i> إيداع</button>
+                    <button class="btn-sm btn-deposit" onclick="toggleDepositBox()"><i class="fa-solid fa-wallet"></i> إيداع</button>
                 </div>
             </div>
 
             <div class="balance-card">
                 <span class="status-tag">• نشط</span>
                 <div class="balance-title">إجمالي الرصيد المتاح</div>
-                <div class="balance-amount">USDT 546.50</div>
+                <div class="balance-amount" id="user-balance-text">USDT 546.50</div>
                 <div class="balance-stats">
                     <div class="stat-item"><p>إجمالي الأرباح</p><span>USDT 124.80+</span></div>
                     <div class="stat-item"><p>عمولات الإحالة</p><span>USDT 80.00+</span></div>
                 </div>
             </div>
 
+            <!-- صندوق معلومات الإيداع (عنوان محفظتك ومعرف بينانس) -->
+            <div id="deposit-info-box" class="deposit-box hidden">
+                <h4><i class="fa-solid fa-qrcode"></i> عنوان الإيداع الرسمي (USDT - TRC20)</h4>
+                <p>قم بالتحويل حصراً عبر شبكة Tron (TRC20):</p>
+                <div class="wallet-highlight">TWQxqyAezMDgoVxdW2CBb5PDC1ktLkw4DN</div>
+                <button class="btn-copy-w" onclick="copyDepositWallet()">نسخ عنوان المحفظة</button>
+                <p style="margin-top: 10px; color: #f59e0b;">معرف بينانس للإدارة (Binance ID): <strong>939010871</strong></p>
+            </div>
+
+            <!-- مركز المهام في نص الشاشة (Task Center) -->
+            <div class="task-center-box">
+                <h3><i class="fa-solid fa-tasks"></i> مركز المهام والأرباح (كل 48 ساعة)</h3>
+                <p>قم بتنفيذ المهمة الدورية لاستلام أرباح الباقة المفعلة لديك فوراً!</p>
+                <button class="btn-do-task" onclick="completeTask()">تنفيذ المهمة واستلام الأرباح</button>
+            </div>
+
             <div class="quick-actions">
-                <div class="action-item" onclick="alert('شحن الرصيد مفعل')"><i class="fa-solid fa-bolt"></i>شحن</div>
-                <div class="action-item" onclick="alert('طلب السحب مفعل')"><i class="fa-solid fa-hand-holding-dollar"></i>سحب</div>
-                <div class="action-item" onclick="copyRef()"><i class="fa-solid fa-user-plus"></i>دعوة صديق</div>
-                <div class="action-item" onclick="alert('الدعم الفني متاح')"><i class="fa-solid fa-paper-plane"></i>الدعم</div>
+                <div class="action-item" onclick="toggleDepositBox()"><i class="fa-solid fa-bolt"></i>شحن (إيداع)</div>
+                <div class="action-item" onclick="alert('تم استلام طلب السحب بنجاح، سيتم التحويل إلى حسابك قريباً')"><i class="fa-solid fa-hand-holding-dollar"></i>سحب</div>
             </div>
 
             <div class="promo-banner">
@@ -132,51 +166,90 @@
                 <button class="btn-invite" onclick="copyRef()">ادعُ الآن</button>
             </div>
 
-            <!-- باقات الاستثمار والأسعار كاملة -->
+            <!-- الباقات الـ 10 مع حساب أرباح كل 48 ساعة وإجمالي الأرباح لـ 30 يوم -->
             <div class="section-title"><i class="fa-solid fa-layer-group"></i> باقات الاستثمار المتاحة (VIP)</div>
             <div class="vip-plans-grid">
                 <div class="plan-card">
                     <div class="plan-info">
-                        <h4>باقة Starlink VIP 1</h4>
-                        <p>العائد: 20% كل 48 ساعة</p>
+                        <h4>Starlink VIP 1</h4>
+                        <p>العائد: 20% كل 48 ساعة (<strong>10 USDT</strong>)<br>إجمالي أرباح 30 يوم: <strong>150 USDT</strong></p>
                     </div>
-                    <div class="plan-price">
-                        <span>50 USDT</span>
-                        <button class="plan-btn" onclick="alert('تم تفعيل الباقة بنجاح')">استثمار</button>
-                    </div>
+                    <div class="plan-price"><span>50 USDT</span><button class="plan-btn" onclick="investPlan('VIP 1', 50, 10)">استثمار</button></div>
                 </div>
                 <div class="plan-card">
                     <div class="plan-info">
-                        <h4>باقة Starlink VIP 2</h4>
-                        <p>العائد: 25% كل 48 ساعة</p>
+                        <h4>Starlink VIP 2</h4>
+                        <p>العائد: 25% كل 48 ساعة (<strong>55 USDT</strong>)<br>إجمالي أرباح 30 يوم: <strong>825 USDT</strong></p>
                     </div>
-                    <div class="plan-price">
-                        <span>200 USDT</span>
-                        <button class="plan-btn" onclick="alert('تم تفعيل الباقة بنجاح')">استثمار</button>
-                    </div>
+                    <div class="plan-price"><span>220 USDT</span><button class="plan-btn" onclick="investPlan('VIP 2', 220, 55)">استثمار</button></div>
                 </div>
                 <div class="plan-card">
                     <div class="plan-info">
-                        <h4>باقة Starlink VIP 3</h4>
-                        <p>العائد: 30% كل 48 ساعة</p>
+                        <h4>Starlink VIP 3</h4>
+                        <p>العائد: 30% كل 48 ساعة (<strong>90 USDT</strong>)<br>إجمالي أرباح 30 يوم: <strong>1,350 USDT</strong></p>
                     </div>
-                    <div class="plan-price">
-                        <span>500 USDT</span>
-                        <button class="plan-btn" onclick="alert('تم تفعيل الباقة بنجاح')">استثمار</button>
+                    <div class="plan-price"><span>300 USDT</span><button class="plan-btn" onclick="investPlan('VIP 3', 300, 90)">استثمار</button></div>
+                </div>
+                <div class="plan-card">
+                    <div class="plan-info">
+                        <h4>Starlink VIP 4</h4>
+                        <p>العائد: 35% كل 48 ساعة (<strong>133 USDT</strong>)<br>إجمالي أرباح 30 يوم: <strong>1,995 USDT</strong></p>
                     </div>
+                    <div class="plan-price"><span>380 USDT</span><button class="plan-btn" onclick="investPlan('VIP 4', 380, 133)">استثمار</button></div>
+                </div>
+                <div class="plan-card">
+                    <div class="plan-info">
+                        <h4>Starlink VIP 5</h4>
+                        <p>العائد: 40% كل 48 ساعة (<strong>200 USDT</strong>)<br>إجمالي أرباح 30 يوم: <strong>3,000 USDT</strong></p>
+                    </div>
+                    <div class="plan-price"><span>500 USDT</span><button class="plan-btn" onclick="investPlan('VIP 5', 500, 200)">استثمار</button></div>
+                </div>
+                <div class="plan-card">
+                    <div class="plan-info">
+                        <h4>Starlink VIP 6</h4>
+                        <p>العائد: 45% كل 48 ساعة (<strong>270 USDT</strong>)<br>إجمالي أرباح 30 يوم: <strong>4,050 USDT</strong></p>
+                    </div>
+                    <div class="plan-price"><span>600 USDT</span><button class="plan-btn" onclick="investPlan('VIP 6', 600, 270)">استثمار</button></div>
+                </div>
+                <div class="plan-card">
+                    <div class="plan-info">
+                        <h4>Starlink VIP 7</h4>
+                        <p>العائد: 50% كل 48 ساعة (<strong>425 USDT</strong>)<br>إجمالي أرباح 30 يوم: <strong>6,375 USDT</strong></p>
+                    </div>
+                    <div class="plan-price"><span>850 USDT</span><button class="plan-btn" onclick="investPlan('VIP 7', 850, 425)">استثمار</button></div>
+                </div>
+                <div class="plan-card">
+                    <div class="plan-info">
+                        <h4>Starlink VIP 8</h4>
+                        <p>العائد: 55% كل 48 ساعة (<strong>660 USDT</strong>)<br>إجمالي أرباح 30 يوم: <strong>9,900 USDT</strong></p>
+                    </div>
+                    <div class="plan-price"><span>1200 USDT</span><button class="plan-btn" onclick="investPlan('VIP 8', 1200, 660)">استثمار</button></div>
+                </div>
+                <div class="plan-card">
+                    <div class="plan-info">
+                        <h4>Starlink VIP 9</h4>
+                        <p>العائد: 60% كل 48 ساعة (<strong>1,500 USDT</strong>)<br>إجمالي أرباح 30 يوم: <strong>22,500 USDT</strong></p>
+                    </div>
+                    <div class="plan-price"><span>2500 USDT</span><button class="plan-btn" onclick="investPlan('VIP 9', 2500, 1500)">استثمار</button></div>
+                </div>
+                <div class="plan-card">
+                    <div class="plan-info">
+                        <h4>Starlink VIP 10</h4>
+                        <p>العائد: 65% كل 48 ساعة (<strong>3,250 USDT</strong>)<br>إجمالي أرباح 30 يوم: <strong>48,750 USDT</strong></p>
+                    </div>
+                    <div class="plan-price"><span>5000 USDT</span><button class="plan-btn" onclick="investPlan('VIP 10', 5000, 3250)">استثمار</button></div>
                 </div>
             </div>
 
             <div class="section-title"><i class="fa-solid fa-clock-rotate-left"></i> سجل النشاطات</div>
             <div class="activity-item">
-                <div class="activity-info"><strong>مريم*** قام بـ (عمولة إحالة)</strong></div>
-                <div class="activity-amount">USDT 40.00</div>
+                <div class="activity-info"><strong>عمر*** قام بـ (إتمام مهمة استثمارية)</strong></div>
+                <div class="activity-amount">+USDT الربح المضاف</div>
             </div>
 
             <button class="logout-btn" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج</button>
         </div>
 
-        <!-- لوحة تحكم الادمن -->
         <div id="admin-panel" class="hidden admin-box">
             <h3 style="color: #38bdf8; margin-bottom: 10px; font-size: 14px;"><i class="fa-solid fa-user-shield"></i> لوحة تحكم المشرف</h3>
             <div id="users-list">جاري تحميل المشتركين...</div>
@@ -203,6 +276,7 @@
         const db = getFirestore(app);
         const ADMIN_EMAIL = "ffwaz2748@gmail.com";
         let currentUserId = "";
+        let currentPlanProfit = 10; // الربح الافتراضي لكل 48 ساعة حسب الباقة
 
         let isLogin = false;
         window.toggleMode = function() {
@@ -223,18 +297,59 @@
                     await signInWithEmailAndPassword(auth, email, pass);
                 } else {
                     let res = await createUserWithEmailAndPassword(auth, email, pass);
-                    await setDoc(doc(db, "users", res.user.uid), { loginId: id, createdAt: new Date().toISOString() });
+                    await setDoc(doc(db, "users", res.user.uid), { 
+                        loginId: id, 
+                        createdAt: new Date().toISOString() 
+                    });
                 }
             } catch(e) { err.innerText = "خطأ: " + e.message; }
         }
 
         window.logout = function() { signOut(auth); }
         window.copyRef = function() {
-            navigator.clipboard.writeText(`https://nzmkek44.github.io/starlink-vip/?ref=${currentUserId}`);
+            navigator.clipboard.writeText(`https://nzmkek442-afk.github.io/starlink-vip-app/?ref=${currentUserId}`);
             alert("تم نسخ رابط الإحالة بنجاح!");
         }
+
+        window.toggleDepositBox = function() {
+            document.getElementById("deposit-info-box").classList.toggle("hidden");
+        }
+
+        window.copyDepositWallet = function() {
+            navigator.clipboard.writeText("TWQxqyAezMDgoVxdW2CBb5PDC1ktLkw4DN");
+            alert("تم نسخ عنوان محفظة الإيداع بنجاح!");
+        }
+
         window.toggleAdminPanel = function() {
             document.getElementById("admin-panel").classList.toggle("hidden");
+        }
+
+        window.investPlan = function(vipLevel, price, profit48h) {
+            document.getElementById("user-vip-badge").innerText = vipLevel;
+            currentPlanProfit = profit48h;
+            alert(`تم تفعيل باقة ${vipLevel} بقيمة ${price} USDT بنجاح! سيتم إضافة أرباح المهمة (${profit48h} USDT) كل 48 ساعة.`);
+        }
+
+        window.completeTask = function() {
+            alert(`🎉 مبروك! تم إتمام المهمة بنجاح وتم إضافة أرباح الـ 48 ساعة (${currentPlanProfit} USDT) إلى رصيدك المتاح!`);
+        }
+
+        const liveMessages = [
+            "🔥 أحمد*** أتم مهمة VIP 1 وسحب أرباحه",
+            "💰 يوسف*** ربح عمولة إحالة بقيمة 120 USDT",
+            "⚡ محمد*** أنجز مهامه الدورية بنجاح",
+            "🚀 رامي*** ارتقى إلى باقة VIP 5 الكبرى",
+            "💎 سارة*** ربحت 450 USDT من أرباح الاستثمار"
+        ];
+
+        function startLiveTicker() {
+            let tickerEl = document.getElementById("live-ticker-text");
+            if (!tickerEl) return;
+            let index = 0;
+            setInterval(() => {
+                tickerEl.innerText = liveMessages[index];
+                index = (index + 1) % liveMessages.length;
+            }, 3500);
         }
 
         onAuthStateChanged(auth, async (user) => {
@@ -245,10 +360,12 @@
                 let name = user.email.split('@')[0];
                 document.getElementById("user-display-name").innerText = name;
                 document.getElementById("user-avatar").innerText = name.charAt(0).toUpperCase();
+
                 if(user.email === ADMIN_EMAIL || user.email.startsWith("ffwaz2748")) {
                     document.getElementById("admin-btn-header").classList.remove("hidden");
                     loadAdmin();
                 }
+                startLiveTicker();
             } else {
                 document.getElementById("auth-section").classList.remove("hidden");
                 document.getElementById("dashboard-section").classList.add("hidden");
@@ -262,7 +379,10 @@
             try {
                 let snap = await getDocs(collection(db, "users"));
                 let h = "";
-                snap.forEach(d => { h += `<div class="user-card">مستخدم: ${d.data().loginId}</div>`; });
+                snap.forEach(d => {
+                    let u = d.data();
+                    h += `<div class="user-card"><strong>المستخدم:</strong> ${u.loginId}</div>`;
+                });
                 list.innerHTML = h || "لا يوجد مشتركين";
             } catch(e) { list.innerHTML = "خطأ في التحميل"; }
         }
