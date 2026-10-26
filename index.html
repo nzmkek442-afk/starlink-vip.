@@ -15,10 +15,8 @@
         label { display: block; margin-bottom: 6px; color: #94a3b8; font-size: 14px; }
         input { width: 100%; padding: 12px 15px; background: #0b0f19; border: 1px solid #334155; color: #fff; border-radius: 8px; font-size: 15px; }
         input:focus { border-color: #00d2ff; outline: none; }
-        .btn-primary { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
-        .btn-primary:hover { background: #1d4ed8; }
+        .btn-primary { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
         .switch-btn { background: transparent; color: #38bdf8; border: none; margin-top: 15px; cursor: pointer; width: 100%; font-size: 14px; }
-        .switch-btn:hover { text-decoration: underline; }
         .alert { text-align: center; color: #f87171; margin-top: 10px; font-size: 14px; }
         
         .hidden { display: none !important; }
@@ -43,14 +41,13 @@
         .stat-item span { font-size: 13px; font-weight: bold; color: #10b981; }
 
         .quick-actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
-        .action-item { background: #1e293b; padding: 12px 5px; border-radius: 10px; text-align: center; color: #fff; text-decoration: none; font-size: 12px; border: 1px solid #334155; cursor: pointer; transition: 0.2s; }
-        .action-item:active { transform: scale(0.95); background: #334155; }
+        .action-item { background: #1e293b; padding: 12px 5px; border-radius: 10px; text-align: center; color: #fff; cursor: pointer; border: 1px solid #334155; font-size: 12px; }
         .action-item i { font-size: 18px; display: block; margin-bottom: 6px; color: #38bdf8; }
 
         .promo-banner { background: linear-gradient(90deg, #b45309, #78350f); padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .promo-text h4 { font-size: 13px; color: #fef08a; margin-bottom: 4px; }
         .promo-text p { font-size: 11px; color: #fde68a; }
-        .btn-invite { background: #ea580c; color: #fff; padding: 8px 14px; border: none; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; white-space: nowrap; }
+        .btn-invite { background: #ea580c; color: #fff; padding: 8px 14px; border: none; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; }
 
         .cycle-box { background: #1e293b; padding: 15px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 20px; }
         .cycle-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
@@ -64,7 +61,6 @@
 
         .admin-box { margin-top: 20px; background: #0f172a; padding: 15px; border-radius: 12px; border: 1px solid #38bdf8; }
         .user-card { background: #1e293b; padding: 10px; margin-bottom: 8px; border-radius: 6px; font-size: 12px; }
-
         .logout-btn { width: 100%; padding: 10px; background: #ef4444; color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; margin-top: 15px; }
     </style>
 </head>
@@ -87,7 +83,7 @@
             <div id="error-msg" class="alert"></div>
         </div>
 
-        <!-- واجهة المنصة الاستثمارية الفخمة (Dashboard) -->
+        <!-- واجهة المنصة الاستثمارية الفخمة -->
         <div id="dashboard-section" class="hidden">
             <div class="user-header">
                 <div class="user-info">
@@ -99,60 +95,45 @@
                 </div>
                 <div class="header-actions">
                     <button class="btn-sm btn-admin hidden" id="admin-btn-header" onclick="toggleAdminPanel()">الأدمن</button>
-                    <button class="btn-sm btn-deposit" onclick="openDeposit()"><i class="fa-solid fa-wallet"></i> إيداع</button>
+                    <button class="btn-sm btn-deposit" onclick="alert('قسم الإيداع مفعل')"><i class="fa-solid fa-wallet"></i> إيداع</button>
                 </div>
             </div>
 
-            <!-- بطاقة الرصيد -->
             <div class="balance-card">
                 <span class="status-tag">• نشط</span>
                 <div class="balance-title">إجمالي الرصيد المتاح</div>
-                <div class="balance-amount"><span style="font-size: 16px;">USDT</span> 546.50</div>
+                <div class="balance-amount">USDT 546.50</div>
                 <div class="balance-stats">
-                    <div class="stat-item">
-                        <p>إجمالي الأرباح</p>
-                        <span>USDT 124.80+</span>
-                    </div>
-                    <div class="stat-item">
-                        <p>عمولات الإحالة (40%)</p>
-                        <span>USDT 80.00+</span>
-                    </div>
+                    <div class="stat-item"><p>إجمالي الأرباح</p><span>USDT 124.80+</span></div>
+                    <div class="stat-item"><p>عمولات الإحالة</p><span>USDT 80.00+</span></div>
                 </div>
             </div>
 
-            <!-- الأزرار السريعة المفعلة -->
             <div class="quick-actions">
-                <div class="action-item" onclick="openRecharge()"><i class="fa-solid fa-bolt"></i>شحن</div>
-                <div class="action-item" onclick="openWithdraw()"><i class="fa-solid fa-hand-holding-dollar"></i>سحب</div>
-                <div class="action-item" onclick="copyRefLink()"><i class="fa-solid fa-user-plus"></i>دعوة صديق</div>
-                <div class="action-item" onclick="openSupport()"><i class="fa-solid fa-paper-plane"></i>الدعم</div>
+                <div class="action-item" onclick="alert('شحن الرصيد مفعل')"><i class="fa-solid fa-bolt"></i>شحن</div>
+                <div class="action-item" onclick="alert('طلب السحب مفعل')"><i class="fa-solid fa-hand-holding-dollar"></i>سحب</div>
+                <div class="action-item" onclick="copyRef()"><i class="fa-solid fa-user-plus"></i>دعوة صديق</div>
+                <div class="action-item" onclick="alert('الدعم الفني متاح')"><i class="fa-solid fa-paper-plane"></i>الدعم</div>
             </div>
 
-            <!-- بنر المكافأة -->
             <div class="promo-banner">
                 <div class="promo-text">
                     <h4>🎁 مكافأة الإحالة الفائقة 40%</h4>
-                    <p>دع أصدقاءك يشحنون واحصل فوراً على 40% من أرباح إحالاتهم!</p>
+                    <p>دع أصدقاءك يشحنون واحصل فوراً على العمولات!</p>
                 </div>
-                <button class="btn-invite" onclick="copyRefLink()">ادعُ الآن</button>
+                <button class="btn-invite" onclick="copyRef()">ادعُ الآن</button>
             </div>
 
-            <!-- دورة الاستثمار -->
             <div class="cycle-box">
                 <div class="cycle-header">
-                    <div class="cycle-title"><i class="fa-solid fa-microchip" style="color: #f59e0b;"></i> دورة الاستثمار الحالية (20% / 48 ساعة)</div>
-                    <div class="timer" id="countdown-timer">31:13:49</div>
+                    <div class="cycle-title"><i class="fa-solid fa-microchip" style="color: #f59e0b;"></i> دورة الاستثمار (20% / 48 ساعة)</div>
+                    <div class="timer">31:13:49</div>
                 </div>
-                <p style="font-size: 11px; color: #94a3b8;">العائد المتبقي للاستحقاق: عائد 20% كل 48 ساعة</p>
             </div>
 
-            <!-- باقات الاستثمار -->
             <div class="section-title"><i class="fa-solid fa-layer-group"></i> سجل النشاطات</div>
             <div class="activity-item">
-                <div class="activity-info">
-                    <strong>مريم*** قام بـ (عمولة إحالة)</strong>
-                    <p style="color: #94a3b8; font-size: 10px;">قبل بضعة ثوانٍ</p>
-                </div>
+                <div class="activity-info"><strong>مريم*** قام بـ (عمولة إحالة)</strong></div>
                 <div class="activity-amount">USDT 40.00</div>
             </div>
 
@@ -161,12 +142,11 @@
 
         <!-- لوحة تحكم الادمن -->
         <div id="admin-panel" class="hidden admin-box">
-            <h3 style="color: #38bdf8; margin-bottom: 10px; font-size: 14px;"><i class="fa-solid fa-user-shield"></i> لوحة تحكم المشرف (Admin)</h3>
+            <h3 style="color: #38bdf8; margin-bottom: 10px; font-size: 14px;"><i class="fa-solid fa-user-shield"></i> لوحة تحكم المشرف</h3>
             <div id="users-list">جاري تحميل المشتركين...</div>
         </div>
     </div>
 
-    <!-- سكربتات فايبريس وتفعيل الأزرار -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -185,94 +165,53 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-
         const ADMIN_EMAIL = "ffwaz2748@gmail.com";
         let currentUserId = "";
 
-        let isLoginMode = false;
+        let isLogin = false;
         window.toggleMode = function() {
-            isLoginMode = !isLoginMode;
-            document.getElementById("form-title").innerText = isLoginMode ? "تسجيل الدخول" : "تسجيل حساب جديد";
-            document.getElementById("action-btn").innerText = isLoginMode ? "دخول" : "إنشاء الحساب";
-            document.querySelector(".switch-btn").innerText = isLoginMode ? "ليس لديك حساب؟ سجل حساب جديد" : "لديك حساب بالفعل؟ سجل الدخول";
+            isLogin = !isLogin;
+            document.getElementById("form-title").innerText = isLogin ? "تسجيل الدخول" : "تسجيل حساب جديد";
+            document.getElementById("action-btn").innerText = isLogin ? "دخول" : "إنشاء الحساب";
         }
 
         window.handleAuth = async function() {
-            let identifier = document.getElementById("identifier").value.trim();
-            const password = document.getElementById("password").value;
-            const errorMsg = document.getElementById("error-msg");
-
-            errorMsg.innerText = "";
-            if (!identifier || !password) {
-                errorMsg.innerText = "يرجى ملء جميع الحقول المطلوبة";
-                return;
-            }
-
-            let emailForAuth = identifier;
-            if (!identifier.includes("@")) {
-                emailForAuth = identifier + "@starlink.vip";
-            }
-
+            let id = document.getElementById("identifier").value.trim();
+            let pass = document.getElementById("password").value;
+            let err = document.getElementById("error-msg");
+            err.innerText = "";
+            if(!id || !pass) { err.innerText = "املأ جميع الحقول"; return; }
+            let email = id.includes("@") ? id : id + "@starlink.vip";
             try {
-                if (isLoginMode) {
-                    await signInWithEmailAndPassword(auth, emailForAuth, password);
+                if(isLogin) {
+                    await signInWithEmailAndPassword(auth, email, pass);
                 } else {
-                    const userCredential = await createUserWithEmailAndPassword(auth, emailForAuth, password);
-                    const user = userCredential.user;
-                    await setDoc(doc(db, "users", user.uid), {
-                        loginId: identifier,
-                        createdAt: new Date().toISOString()
-                    });
+                    let res = await createUserWithEmailAndPassword(auth, email, pass);
+                    await setDoc(doc(db, "users", res.user.uid), { loginId: id, createdAt: new Date().toISOString() });
                 }
-            } catch (error) {
-                errorMsg.innerText = "خطأ: " + error.message;
-            }
+            } catch(e) { err.innerText = "خطأ: " + e.message; }
         }
 
-        window.logout = function() {
-            signOut(auth);
+        window.logout = function() { signOut(auth); }
+        window.copyRef = function() {
+            navigator.clipboard.writeText(`https://nzmkek44.github.io/starlink-vip/?ref=${currentUserId}`);
+            alert("تم نسخ رابط الإحالة بنجاح!");
         }
-
-        window.copyRefLink = function() {
-            const link = `https://nzmkek44.github.io/starlink-vip/?ref=${currentUserId}`;
-            navigator.clipboard.writeText(link);
-            alert("تم نسخ رابط الإحالة الخاص بك بنجاح!");
-        }
-
-        window.openDeposit = function() {
-            alert("قسم الإيداع: يمكنك إيداع العملات عبر شبكة USDT (TRC20).");
-        }
-
-        window.openRecharge = function() {
-            alert("قسم الشحن والتفعيل السريع مفعل.");
-        }
-
-        window.openWithdraw = function() {
-            alert("قسم السحب: الحد الأدنى للسحب هو 10 USDT.");
-        }
-
-        window.openSupport = function() {
-            alert("الدعم الفني: تواصل معنا عبر القناة الرسمية للمنصة.");
-        }
-
         window.toggleAdminPanel = function() {
-            const panel = document.getElementById("admin-panel");
-            panel.classList.toggle("hidden");
+            document.getElementById("admin-panel").classList.toggle("hidden");
         }
 
         onAuthStateChanged(auth, async (user) => {
-            if (user) {
+            if(user) {
                 currentUserId = user.uid;
                 document.getElementById("auth-section").classList.add("hidden");
                 document.getElementById("dashboard-section").classList.remove("hidden");
-                
-                const userName = user.email.split('@')[0];
-                document.getElementById("user-display-name").innerText = userName;
-                document.getElementById("user-avatar").innerText = userName.charAt(0).toUpperCase();
-
+                let name = user.email.split('@')[0];
+                document.getElementById("user-display-name").innerText = name;
+                document.getElementById("user-avatar").innerText = name.charAt(0).toUpperCase();
                 if(user.email === ADMIN_EMAIL || user.email.startsWith("ffwaz2748")) {
                     document.getElementById("admin-btn-header").classList.remove("hidden");
-                    loadAdminData();
+                    loadAdmin();
                 }
             } else {
                 document.getElementById("auth-section").classList.remove("hidden");
@@ -281,23 +220,15 @@
             }
         });
 
-        async function loadAdminData() {
-            const listDiv = document.getElementById("users-list");
-            listDiv.innerHTML = "جاري جلب المشتركين...";
+        async function loadAdmin() {
+            let list = document.getElementById("users-list");
+            list.innerHTML = "جاري التحميل...";
             try {
-                const querySnapshot = await getDocs(collection(db, "users"));
-                let html = "";
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    html += `<div class="user-card">
-                        <p><strong>المستخدم:</strong> ${data.loginId}</p>
-                        <p style="font-size: 10px; color: #94a3b8;">التاريخ: ${data.createdAt}</p>
-                    </div>`;
-                });
-                listDiv.innerHTML = html || "لا يوجد مشتركين بعد";
-            } catch (e) {
-                listDiv.innerHTML = "خطأ في جلب البيانات";
-            }
+                let snap = await getDocs(collection(db, "users"));
+                let h = "";
+                snap.forEach(d => { h += `<div class="user-card">مستخدم: ${d.data().loginId}</div>`; });
+                list.innerHTML = h || "لا يوجد مشتركين";
+            } catch(e) { list.innerHTML = "خطأ في التحميل"; }
         }
     </script>
 </body>
