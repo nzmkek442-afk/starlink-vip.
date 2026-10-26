@@ -10,7 +10,6 @@
         body { background: #0b0f19; color: #fff; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 10px; }
         .container { max-width: 450px; width: 100%; background: #111723; padding: 20px; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.7); border: 1px solid #1e293b; }
         
-        /* Auth Styles */
         h2.auth-title { text-align: center; color: #00d2ff; margin-bottom: 20px; font-size: 22px; }
         .form-group { margin-bottom: 15px; }
         label { display: block; margin-bottom: 6px; color: #94a3b8; font-size: 14px; }
@@ -24,7 +23,6 @@
         
         .hidden { display: none !important; }
 
-        /* VIP Dashboard Styles */
         .user-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .user-info { display: flex; align-items: center; gap: 10px; }
         .avatar { width: 42px; height: 42px; background: #f59e0b; color: #000; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 18px; }
@@ -45,7 +43,8 @@
         .stat-item span { font-size: 13px; font-weight: bold; color: #10b981; }
 
         .quick-actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
-        .action-item { background: #1e293b; padding: 12px 5px; border-radius: 10px; text-align: center; color: #fff; text-decoration: none; font-size: 12px; border: 1px solid #334155; cursor: pointer; }
+        .action-item { background: #1e293b; padding: 12px 5px; border-radius: 10px; text-align: center; color: #fff; text-decoration: none; font-size: 12px; border: 1px solid #334155; cursor: pointer; transition: 0.2s; }
+        .action-item:active { transform: scale(0.95); background: #334155; }
         .action-item i { font-size: 18px; display: block; margin-bottom: 6px; color: #38bdf8; }
 
         .promo-banner { background: linear-gradient(90deg, #b45309, #78350f); padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
@@ -90,7 +89,6 @@
 
         <!-- واجهة المنصة الاستثمارية الفخمة (Dashboard) -->
         <div id="dashboard-section" class="hidden">
-            <!-- الهيدر والمعلومات الشخصية -->
             <div class="user-header">
                 <div class="user-info">
                     <div class="avatar" id="user-avatar">ف</div>
@@ -100,8 +98,8 @@
                     </div>
                 </div>
                 <div class="header-actions">
-                    <button class="btn-sm btn-admin hidden" id="admin-btn-header">الأدمن</button>
-                    <button class="btn-sm btn-deposit"><i class="fa-solid fa-wallet"></i> إيداع</button>
+                    <button class="btn-sm btn-admin hidden" id="admin-btn-header" onclick="toggleAdminPanel()">الأدمن</button>
+                    <button class="btn-sm btn-deposit" onclick="openDeposit()"><i class="fa-solid fa-wallet"></i> إيداع</button>
                 </div>
             </div>
 
@@ -122,12 +120,12 @@
                 </div>
             </div>
 
-            <!-- الأزرار السريعة -->
+            <!-- الأزرار السريعة المفعلة -->
             <div class="quick-actions">
-                <div class="action-item"><i class="fa-solid fa-bolt"></i>شحن</div>
-                <div class="action-item"><i class="fa-solid fa-hand-holding-dollar"></i>سحب</div>
+                <div class="action-item" onclick="openRecharge()"><i class="fa-solid fa-bolt"></i>شحن</div>
+                <div class="action-item" onclick="openWithdraw()"><i class="fa-solid fa-hand-holding-dollar"></i>سحب</div>
                 <div class="action-item" onclick="copyRefLink()"><i class="fa-solid fa-user-plus"></i>دعوة صديق</div>
-                <div class="action-item"><i class="fa-solid fa-paper-plane"></i>الدعم</div>
+                <div class="action-item" onclick="openSupport()"><i class="fa-solid fa-paper-plane"></i>الدعم</div>
             </div>
 
             <!-- بنر المكافأة -->
@@ -143,13 +141,13 @@
             <div class="cycle-box">
                 <div class="cycle-header">
                     <div class="cycle-title"><i class="fa-solid fa-microchip" style="color: #f59e0b;"></i> دورة الاستثمار الحالية (20% / 48 ساعة)</div>
-                    <div class="timer">31:13:49</div>
+                    <div class="timer" id="countdown-timer">31:13:49</div>
                 </div>
                 <p style="font-size: 11px; color: #94a3b8;">العائد المتبقي للاستحقاق: عائد 20% كل 48 ساعة</p>
             </div>
 
             <!-- باقات الاستثمار -->
-            <div class="section-title"><i class="fa-solid fa-layer-group"></i> باقات الاستثمار المتاحة (VIP)</div>
+            <div class="section-title"><i class="fa-solid fa-layer-group"></i> سجل النشاطات</div>
             <div class="activity-item">
                 <div class="activity-info">
                     <strong>مريم*** قام بـ (عمولة إحالة)</strong>
@@ -161,14 +159,14 @@
             <button class="logout-btn" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج</button>
         </div>
 
-        <!-- لوحة تحكم الادمن (تظهر فقط لإيميلك) -->
+        <!-- لوحة تحكم الادمن -->
         <div id="admin-panel" class="hidden admin-box">
             <h3 style="color: #38bdf8; margin-bottom: 10px; font-size: 14px;"><i class="fa-solid fa-user-shield"></i> لوحة تحكم المشرف (Admin)</h3>
             <div id="users-list">جاري تحميل المشتركين...</div>
         </div>
     </div>
 
-    <!-- سكربتات فايبريس وترابط النظام -->
+    <!-- سكربتات فايبريس وتفعيل الأزرار -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -238,7 +236,28 @@
         window.copyRefLink = function() {
             const link = `https://nzmkek44.github.io/starlink-vip/?ref=${currentUserId}`;
             navigator.clipboard.writeText(link);
-            alert("تم نسخ رابط الإحالة بنجاح:\n" + link);
+            alert("تم نسخ رابط الإحالة الخاص بك بنجاح!");
+        }
+
+        window.openDeposit = function() {
+            alert("قسم الإيداع: يمكنك إيداع العملات عبر شبكة USDT (TRC20).");
+        }
+
+        window.openRecharge = function() {
+            alert("قسم الشحن والتفعيل السريع مفعل.");
+        }
+
+        window.openWithdraw = function() {
+            alert("قسم السحب: الحد الأدنى للسحب هو 10 USDT.");
+        }
+
+        window.openSupport = function() {
+            alert("الدعم الفني: تواصل معنا عبر القناة الرسمية للمنصة.");
+        }
+
+        window.toggleAdminPanel = function() {
+            const panel = document.getElementById("admin-panel");
+            panel.classList.toggle("hidden");
         }
 
         onAuthStateChanged(auth, async (user) => {
@@ -247,13 +266,11 @@
                 document.getElementById("auth-section").classList.add("hidden");
                 document.getElementById("dashboard-section").classList.remove("hidden");
                 
-                // تحديث اسم الحساب والحرف الأول
                 const userName = user.email.split('@')[0];
                 document.getElementById("user-display-name").innerText = userName;
                 document.getElementById("user-avatar").innerText = userName.charAt(0).toUpperCase();
 
                 if(user.email === ADMIN_EMAIL || user.email.startsWith("ffwaz2748")) {
-                    document.getElementById("admin-panel").classList.remove("hidden");
                     document.getElementById("admin-btn-header").classList.remove("hidden");
                     loadAdminData();
                 }
