@@ -2,11 +2,14 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Starlink VIP - المنصة الرسمية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background: #0b0f19; color: #fff; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 10px; }
         .container { max-width: 450px; width: 100%; background: #111723; padding: 20px; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.7); border: 1px solid #1e293b; }
         
@@ -41,7 +44,8 @@
         .stat-item span { font-size: 13px; font-weight: bold; color: #10b981; }
 
         .quick-actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
-        .action-item { background: #1e293b; padding: 12px 5px; border-radius: 10px; text-align: center; color: #fff; cursor: pointer; border: 1px solid #334155; font-size: 12px; }
+        .action-item { background: #1e293b; padding: 12px 5px; border-radius: 10px; text-align: center; color: #fff; cursor: pointer; border: 1px solid #334155; font-size: 12px; transition: 0.2s; }
+        .action-item:active { background: #334155; transform: scale(0.95); }
         .action-item i { font-size: 18px; display: block; margin-bottom: 6px; color: #38bdf8; }
 
         .promo-banner { background: linear-gradient(90deg, #b45309, #78350f); padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
@@ -49,7 +53,7 @@
         .promo-text p { font-size: 11px; color: #fde68a; }
         .btn-invite { background: #ea580c; color: #fff; padding: 8px 14px; border: none; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; }
 
-        /* باقات الاستثمار والأسعار القديمة الكاملة */
+        /* باقات الاستثمار والأسعار */
         .section-title { font-size: 15px; margin-bottom: 12px; color: #f59e0b; display: flex; align-items: center; gap: 8px; }
         .vip-plans-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 20px; }
         .plan-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
@@ -87,7 +91,7 @@
             <div id="error-msg" class="alert"></div>
         </div>
 
-        <!-- واجهة المنصة الاستثمارية الفخمة مع الباقات والأسعار الكاملة -->
+        <!-- واجهة المنصة الاستثمارية الفخمة كاملة -->
         <div id="dashboard-section" class="hidden">
             <div class="user-header">
                 <div class="user-info">
@@ -128,7 +132,7 @@
                 <button class="btn-invite" onclick="copyRef()">ادعُ الآن</button>
             </div>
 
-            <!-- باقات الاستثمار والأسعار الأصلية -->
+            <!-- باقات الاستثمار والأسعار كاملة -->
             <div class="section-title"><i class="fa-solid fa-layer-group"></i> باقات الاستثمار المتاحة (VIP)</div>
             <div class="vip-plans-grid">
                 <div class="plan-card">
