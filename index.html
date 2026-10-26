@@ -49,12 +49,16 @@
         .promo-text p { font-size: 11px; color: #fde68a; }
         .btn-invite { background: #ea580c; color: #fff; padding: 8px 14px; border: none; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; }
 
-        .cycle-box { background: #1e293b; padding: 15px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 20px; }
-        .cycle-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .cycle-title { font-size: 13px; color: #cbd5e1; display: flex; align-items: center; gap: 8px; }
-        .timer { background: #0f172a; padding: 6px 12px; border-radius: 6px; color: #f59e0b; font-weight: bold; font-size: 13px; font-family: monospace; }
-
+        /* باقات الاستثمار والأسعار القديمة الكاملة */
         .section-title { font-size: 15px; margin-bottom: 12px; color: #f59e0b; display: flex; align-items: center; gap: 8px; }
+        .vip-plans-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 20px; }
+        .plan-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .plan-info h4 { color: #00d2ff; font-size: 14px; margin-bottom: 4px; }
+        .plan-info p { color: #94a3b8; font-size: 11px; }
+        .plan-price { text-align: left; }
+        .plan-price span { display: block; font-weight: bold; color: #f59e0b; font-size: 14px; }
+        .plan-btn { background: #2563eb; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; margin-top: 6px; }
+
         .activity-item { background: #1e293b; padding: 12px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #334155; margin-bottom: 10px; }
         .activity-info { font-size: 12px; }
         .activity-amount { color: #10b981; font-weight: bold; font-size: 12px; }
@@ -83,7 +87,7 @@
             <div id="error-msg" class="alert"></div>
         </div>
 
-        <!-- واجهة المنصة الاستثمارية الفخمة -->
+        <!-- واجهة المنصة الاستثمارية الفخمة مع الباقات والأسعار الكاملة -->
         <div id="dashboard-section" class="hidden">
             <div class="user-header">
                 <div class="user-info">
@@ -124,14 +128,42 @@
                 <button class="btn-invite" onclick="copyRef()">ادعُ الآن</button>
             </div>
 
-            <div class="cycle-box">
-                <div class="cycle-header">
-                    <div class="cycle-title"><i class="fa-solid fa-microchip" style="color: #f59e0b;"></i> دورة الاستثمار (20% / 48 ساعة)</div>
-                    <div class="timer">31:13:49</div>
+            <!-- باقات الاستثمار والأسعار الأصلية -->
+            <div class="section-title"><i class="fa-solid fa-layer-group"></i> باقات الاستثمار المتاحة (VIP)</div>
+            <div class="vip-plans-grid">
+                <div class="plan-card">
+                    <div class="plan-info">
+                        <h4>باقة Starlink VIP 1</h4>
+                        <p>العائد: 20% كل 48 ساعة</p>
+                    </div>
+                    <div class="plan-price">
+                        <span>50 USDT</span>
+                        <button class="plan-btn" onclick="alert('تم تفعيل الباقة بنجاح')">استثمار</button>
+                    </div>
+                </div>
+                <div class="plan-card">
+                    <div class="plan-info">
+                        <h4>باقة Starlink VIP 2</h4>
+                        <p>العائد: 25% كل 48 ساعة</p>
+                    </div>
+                    <div class="plan-price">
+                        <span>200 USDT</span>
+                        <button class="plan-btn" onclick="alert('تم تفعيل الباقة بنجاح')">استثمار</button>
+                    </div>
+                </div>
+                <div class="plan-card">
+                    <div class="plan-info">
+                        <h4>باقة Starlink VIP 3</h4>
+                        <p>العائد: 30% كل 48 ساعة</p>
+                    </div>
+                    <div class="plan-price">
+                        <span>500 USDT</span>
+                        <button class="plan-btn" onclick="alert('تم تفعيل الباقة بنجاح')">استثمار</button>
+                    </div>
                 </div>
             </div>
 
-            <div class="section-title"><i class="fa-solid fa-layer-group"></i> سجل النشاطات</div>
+            <div class="section-title"><i class="fa-solid fa-clock-rotate-left"></i> سجل النشاطات</div>
             <div class="activity-item">
                 <div class="activity-info"><strong>مريم*** قام بـ (عمولة إحالة)</strong></div>
                 <div class="activity-amount">USDT 40.00</div>
